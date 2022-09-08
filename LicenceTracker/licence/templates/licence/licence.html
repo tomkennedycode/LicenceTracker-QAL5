@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+    {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Licence app</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarToggle">
+            <a class="navbar-brand" href="{% url 'index' %}"><h4>Licence Tracker</h4></a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index' %}"><h4>Admin</h4></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upload-licence' %}"><h4>Upload Licence</h4></a>
+                </li>
+            </ul>
+            
+        </div>
+    </nav>
+    <br>
+
+    <div class="container-fluid">
+
+        {% block content %}
+        <h4 class="text-center p-5">
+            The best place to store licences and track them!
+        </h4>
+        <div class="card-columns">
+            {% for licence in shelf %}
+            <div class="card" style="width: 18rem; float: left">
+                <div class="card-body">
+                    <h5 class="card-title">{{ licence.name }}</h5>
+                    <p class="card-text">{{ licence.comment }}</p>
+                    <div class="card-footer bg-transparent border-dark">
+                        <p class="card-title">{{ license.createdBy }}</p>
+                        <center>
+                            <a href="update/{{licence.id}}" class="btn btn-primary" id="{{licence.id}}">Edit</a>
+                            <a href="delete/{{licence.id}}" class="btn btn-danger" id="{{licence.id}}">Delete</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+</body>
+</html>
