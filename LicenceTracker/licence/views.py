@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
-from .models import Licence
+from .models import Licence, LicenceType
 from .forms import CreateLicence
 from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    shelf = Licence.objects.all
+    shelf = Licence.objects.all()
+
+    for item in shelf:
+        print(item.comment)
+        item.licence_name = LicenceType.objects.get(id = item.licence_type_id)
     return render(request, 'licence/licence.html', {'shelf': shelf})
 
 def upload(request):

@@ -34,10 +34,10 @@
             {% for licence in shelf %}
             <div class="card" style="width: 18rem; float: left">
                 <div class="card-body">
-                    <h5 class="card-title">{{ licence.name }}</h5>
+                    <h5 class="card-title">{{ licence.licence_name }}</h5>
                     <p class="card-text">{{ licence.comment }}</p>
                     <div class="card-footer bg-transparent border-dark">
-                        <p class="card-title">{{ license.createdBy }}</p>
+                        <p class="card-title">{{ licence.created_by }}</p>
                         <center>
                             <a href="update/{{licence.id}}" class="btn btn-primary" id="{{licence.id}}">Edit</a>
                             <a href="delete/{{licence.id}}" class="btn btn-danger" id="{{licence.id}}">Delete</a>
