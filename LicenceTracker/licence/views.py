@@ -8,8 +8,8 @@ def index(request):
     shelf = Licence.objects.all()
 
     for item in shelf:
-        print(item.comment)
         item.licence_name = LicenceType.objects.get(id = item.licence_type_id)
+        
     return render(request, 'licence/licence.html', {'shelf': shelf})
 
 def upload(request):

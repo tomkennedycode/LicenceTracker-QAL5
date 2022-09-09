@@ -28,25 +28,42 @@
 
         {% block content %}
         <h4 class="text-center p-5">
-            The best place to store licences and track them!
+            The best place to track your team licences!
         </h4>
-        <div class="card-columns">
-            {% for licence in shelf %}
-            <div class="card" style="width: 18rem; float: left">
-                <div class="card-body">
-                    <h5 class="card-title">{{ licence.licence_name }}</h5>
-                    <p class="card-text">{{ licence.comment }}</p>
-                    <div class="card-footer bg-transparent border-dark">
-                        <p class="card-title">{{ licence.created_by }}</p>
-                        <center>
-                            <a href="update/{{licence.id}}" class="btn btn-primary" id="{{licence.id}}">Edit</a>
-                            <a href="delete/{{licence.id}}" class="btn btn-danger" id="{{licence.id}}">Delete</a>
-                        </center>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Software</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Status</th>
+                <th scope="col">Purchase Date</th>
+                <th scope="col">REQ No.</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Available?</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for licence in shelf %}
+                <tr>
+                    <th scope="row">{{ licence.id }}</th>
+                    <td>{{ licence.licence_name }}</td>
+                    <td>{{ licence.created_by }}</td>
+                    <td>{{ licence.status }}</td>
+                    <td>{{ licence.purchase_date }}</td>
+                    <td>{{ licence.request_number }}</td>
+                    <td>${{ licence.cost }}</td>
+                    <td>{{ licence.comment }}</td>
+                    <td>{{ licence.available_for_reallocation }}</td>
+                    <td><a href="update/{{licence.id}}" class="btn btn-primary" id="{{licence.id}}">Edit</a></td>
+                    <td><a href="delete/{{licence.id}}" class="btn btn-danger" id="{{licence.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
         {% endblock %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
