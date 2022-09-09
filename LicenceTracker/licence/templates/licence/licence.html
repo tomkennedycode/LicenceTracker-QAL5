@@ -13,7 +13,7 @@
             <a class="navbar-brand" href="{% url 'index' %}"><h4>Licence Tracker</h4></a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:index' %}"><h4>Admin</h4></a>
+                    <a class="nav-link" href="{% url 'admin:index' %}"><h4>Log in</h4></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'upload-licence' %}"><h4>Upload Licence</h4></a>
@@ -30,8 +30,8 @@
         <h4 class="text-center p-5">
             The best place to track your team licences!
         </h4>
-        <table class="table">
-            <thead>
+        <table class="table table-striped ">
+            <thead class="thead-light">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Software</th>
@@ -51,7 +51,7 @@
                 <tr>
                     <th scope="row">{{ licence.id }}</th>
                     <td>{{ licence.licence_name }}</td>
-                    <td>{{ licence.created_by }}</td>
+                    <td>{{ licence.assigned_to.email }}</td>
                     <td>{{ licence.status }}</td>
                     <td>{{ licence.purchase_date }}</td>
                     <td>{{ licence.request_number }}</td>
