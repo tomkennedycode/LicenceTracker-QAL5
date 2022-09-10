@@ -16,10 +16,10 @@ class LicenceStatus(models.Model):
         return self.type
 
 class Licence(models.Model):
-    licence_type = models.ForeignKey("LicenceType", on_delete=models.CASCADE, null=True)
+    licence_type = models.ForeignKey(LicenceType, on_delete=models.CASCADE, null=True)
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     comment = models.TextField(max_length=500)
-    status = models.ForeignKey("LicenceStatus", on_delete=models.CASCADE, null=True)
+    status = models.ForeignKey(LicenceStatus, on_delete=models.CASCADE, null=True)
     purchase_date = models.DateField()
     request_number = models.CharField(max_length=100)
     cost = models.DecimalField(max_digits=6, decimal_places=2, default=0)
