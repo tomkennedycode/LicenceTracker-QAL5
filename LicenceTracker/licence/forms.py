@@ -12,5 +12,7 @@ class CreateLicence(forms.ModelForm):
         widgets = {
             'purchase_date': DateInput(),
             'comment': forms.Textarea(attrs={'rows':4, 'cols':50}),
+            'created_by': forms.HiddenInput(),
+            'last_updated_by': forms.HiddenInput()
         }
         

@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def index(request):
-    print('here p2')
     shelf = Licence.objects.all()
     for item in shelf:
         item.licence_name = LicenceType.objects.get(id = item.licence_type_id)
@@ -19,6 +18,10 @@ def upload(request):
     upload = CreateLicence()
     if request.method == 'POST':
         upload = CreateLicence(request.POST, request.FILES)
+        upload.data._mutable = True
+        upload.data['created_by'] = request.user.email
+        upload.data['last_updated_by'] = request.user.email
+        upload.data._mutable = False
         if upload.is_valid():
             upload.save()
             return redirect('index')
@@ -35,6 +38,9 @@ def update_licence(request, licence_id):
     except Licence.DoesNotExist:
         return redirect('index')
     licence_form = CreateLicence(request.POST or None, instance= licence_shelf)
+    licence_form.data._mutable = True
+    licence_form.data['last_updated_by'] = request.user.email
+    licence_form.data._mutable = False
     if licence_form.is_valid():
         licence_form.save()
         return redirect('index')
