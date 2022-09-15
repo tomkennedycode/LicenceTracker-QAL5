@@ -55,11 +55,13 @@
                     <td>{{ licence.status }}</td>
                     <td>{{ licence.purchase_date }}</td>
                     <td>{{ licence.request_number }}</td>
-                    <td>${{ licence.cost }}</td>
+                    <td>£{{ licence.cost }}</td>
                     <td>{{ licence.comment }}</td>
                     <td>{{ licence.available_for_reallocation }}</td>
                     <td><a href="update/{{licence.id}}" class="btn btn-primary" id="{{licence.id}}">Edit</a></td>
+                    {% if is_superuser == True %}
                     <td><a href="delete/{{licence.id}}" class="btn btn-danger" id="{{licence.id}}">Delete</a></td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

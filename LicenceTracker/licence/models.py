@@ -24,9 +24,9 @@ class Licence(models.Model):
     request_number = models.CharField(max_length=100)
     cost = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     available_for_reallocation = models.BooleanField(default= False)
-    created_by = models.TextField(max_length=500)
+    created_by = models.TextField(max_length=50)
     created_datetime = models.DateTimeField(auto_now_add=True)
-    last_updated_by = models.TextField(max_length=500)
+    last_updated_by = models.TextField(max_length=50)
     last_updated_datetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
