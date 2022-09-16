@@ -129,3 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/admin/login'
 LOGIN_REDIRECT_URL = '/admin/login'
+"import django_heroku" 
+"django_heroku.settings(locals())" 
