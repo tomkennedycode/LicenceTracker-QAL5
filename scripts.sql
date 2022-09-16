@@ -13,7 +13,7 @@ UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='licence_licence';
 .schema licence_licence
 
 -- To reset migrations, drop licence tables and remove licence from below table
--- DELETE FROM django_migrations WHERE app = 'licence';
--- DROP TABLE licence_licence;
--- DROP TABLE licence_licencestatus;
--- DROP TABLE licence_licencetype;
+DELETE FROM django_migrations WHERE app = 'licence';
+DROP TABLE licence_licence;
+DROP TABLE licence_licencestatus;
+DROP TABLE licence_licencetype;
