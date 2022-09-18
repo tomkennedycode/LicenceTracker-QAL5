@@ -10,7 +10,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="collapse navbar-collapse" id="navbarToggle">
-            <a class="navbar-brand" href="{% url 'index' %}"><h4>Licence Tracker</h4></a>
+            <a class="navbar-brand" href="{% url 'home' %}"><h4>Licence Tracker</h4></a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'admin:index' %}"><h4>Log in</h4></a>
@@ -23,9 +23,7 @@
         </div>
     </nav>
     <br>
-
     <div class="container-fluid">
-
         {% block content %}
         <h4 class="text-center p-5">
             The best place to track your team licences!
@@ -47,7 +45,7 @@
               </tr>
             </thead>
             <tbody>
-                {% for licence in shelf %}
+                {% for licence in licences %}
                 <tr>
                     <th scope="row">{{ licence.id }}</th>
                     <td>{{ licence.licence_name }}</td>
@@ -60,7 +58,7 @@
                     <td>{{ licence.available_for_reallocation }}</td>
                     <td><a href="update/{{licence.id}}" class="btn btn-primary" id="{{licence.id}}">Edit</a></td>
                     {% if is_superuser == True %}
-                    <td><a href="delete/{{licence.id}}" class="btn btn-danger" id="{{licence.id}}">Delete</a></td>
+                    <td><a href="delete/{{licence.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this licence?')" id="{{licence.id}}">Delete</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

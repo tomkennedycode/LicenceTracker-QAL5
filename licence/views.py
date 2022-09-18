@@ -6,28 +6,30 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @login_required
-def index(request):
-    shelf = Licence.objects.all()
+def home(request):
+    licences = Licence.objects.all()
+    # If user is superuser, show the delete button
     is_superuser = request.user.is_superuser
-    for item in shelf:
+    for item in licences:
         item.licence_name = LicenceType.objects.get(id = item.licence_type_id)
 
-    return render(request, 'licence/licence.html', {'shelf': shelf, 'is_superuser': is_superuser})
+    return render(request, 'licence/licence.html', {'licences': licences, 'is_superuser': is_superuser})
 
 @login_required
 def upload(request):
     upload = CreateLicence()
     if request.method == 'POST':
         upload = CreateLicence(request.POST, request.FILES)
+        # Add created_by into DB from the user object
         upload.data._mutable = True
         upload.data['created_by'] = request.user.email
         upload.data['last_updated_by'] = request.user.email
-        upload.data._mutable = False
+        upload.data._mutable = False        
         if upload.is_valid():
             upload.save()
-            return redirect('index')
+            return redirect('home')
         else:
-            return HttpResponse(""" Something went wrong, please reload the webpage by clicking <a href="{{url:'index'}}>Reload</a>" """)
+            return HttpResponse(""" Something went wrong, please reload the webpage by clicking <a href="{{url:'home'}}>Reload</a>" """)
     else:
         return render(request, 'licence/upload_licence.html', {'upload_licence': upload})
 
@@ -35,26 +37,27 @@ def upload(request):
 def update_licence(request, licence_id):
     licence_id = int(licence_id)
     try:
-        licence_shelf = Licence.objects.get(id = licence_id)
+        licence = Licence.objects.get(id = licence_id)
     except Licence.DoesNotExist:
-        return redirect('index')
+        return redirect('home')
+    #Get the old created by - making sure we don't overwrite the value
     created_by = Licence.objects.filter(id = licence_id).values('created_by')[0]['created_by']
-    licence_form = CreateLicence(request.POST or None, instance= licence_shelf)
-    licence_form.data._mutable = True
-    licence_form.data['created_by'] = created_by
-    licence_form.data['last_updated_by'] = request.user.email
-    licence_form.data._mutable = False
-    if licence_form.is_valid():
-        licence_form.save()
-        return redirect('index')
-    return render(request, 'licence/upload_licence.html', {'upload_licence': licence_form})
+    updated_licence = CreateLicence(request.POST or None, instance= licence)
+    updated_licence.data._mutable = True
+    updated_licence.data['created_by'] = created_by
+    updated_licence.data['last_updated_by'] = request.user.email
+    updated_licence.data._mutable = False
+    if updated_licence.is_valid():
+        updated_licence.save()
+        return redirect('home')
+    return render(request, 'licence/upload_licence.html', {'upload_licence': updated_licence})
 
 @login_required
-def delete_licence(request, licence_id):
+def delete_licence(licence_id):
     licence_id = int(licence_id)
     try:
-        licence_shelf = Licence.objects.get(id = licence_id)
+        licence = Licence.objects.get(id = licence_id)
     except Licence.DoesNotExist:
-        return redirect('index')
-    licence_shelf.delete()
-    return redirect(index)
+        return redirect('home')
+    licence.delete()
+    return redirect(home)

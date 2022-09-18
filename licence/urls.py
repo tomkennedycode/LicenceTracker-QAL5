@@ -4,7 +4,7 @@ from LicenceTracker.settings import DEBUG, STATIC_ROOT, STATIC_URL, MEDIA_URL, M
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
     path('upload/', views.upload, name='upload-licence'),
     path('update/<int:licence_id>', views.update_licence),
     path('delete/<int:licence_id>', views.delete_licence)
