@@ -51,7 +51,7 @@ def update_licence(request, licence_id):
         return render(request, 'licence/upload_licence.html', {'upload_licence': updated_licence})
 
 @login_required
-def delete_licence(licence_id):
+def delete_licence(request, licence_id):
     licence_id = int(licence_id)
     try:
         licence = Licence.objects.get(id = licence_id)
