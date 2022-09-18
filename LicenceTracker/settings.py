@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-26b50sjp*ucd$m7wbj7me*tmmqq1novcu&%vd_u+q$oooajz19'
+#SECRET_KEY = 'django-insecure-26b50sjp*ucd$m7wbj7me*tmmqq1novcu&%vd_u+q$oooajz19'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = ['licence-tracker.herokuapp.com']
+ALLOWED_HOSTS = ['licence-tracker.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -75,12 +75,17 @@ WSGI_APPLICATION = 'LicenceTracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#LOCAL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'LicenceTracker', 
+#         'USER': 'postgres', 
+#         'PASSWORD': 'password',
+#         'HOST': '127.0.0.1', 
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -129,5 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/admin/login'
 LOGIN_REDIRECT_URL = '/admin/login'
-"import django_heroku" 
-"django_heroku.settings(locals())" 
+import django_heroku
+django_heroku.settings(locals())
