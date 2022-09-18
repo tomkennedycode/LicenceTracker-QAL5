@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Licence, LicenceType
 from .forms import CreateLicence
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 @login_required
@@ -21,15 +21,12 @@ def upload(request):
     if request.method == 'POST':
         upload = CreateLicence(request.POST, request.FILES)
         # Add created_by into DB from the user object
-        upload.data._mutable = True
-        upload.data['created_by'] = request.user.email
-        upload.data['last_updated_by'] = request.user.email
-        upload.data._mutable = False        
+        upload = update_created_by_and_last_updated_by(upload, request.user.email, request.user.email)       
         if upload.is_valid():
             upload.save()
             return redirect('home')
         else:
-            return HttpResponse(""" Something went wrong, please reload the webpage by clicking <a href="{{url:'home'}}>Reload</a>" """)
+            return display_error(request)
     else:
         return render(request, 'licence/upload_licence.html', {'upload_licence': upload})
 
@@ -40,17 +37,18 @@ def update_licence(request, licence_id):
         licence = Licence.objects.get(id = licence_id)
     except Licence.DoesNotExist:
         return redirect('home')
-    #Get the old created by - making sure we don't overwrite the value
+    # Get the old created by - making sure we don't overwrite the value
     created_by = Licence.objects.filter(id = licence_id).values('created_by')[0]['created_by']
     updated_licence = CreateLicence(request.POST or None, instance= licence)
-    updated_licence.data._mutable = True
-    updated_licence.data['created_by'] = created_by
-    updated_licence.data['last_updated_by'] = request.user.email
-    updated_licence.data._mutable = False
-    if updated_licence.is_valid():
-        updated_licence.save()
-        return redirect('home')
-    return render(request, 'licence/upload_licence.html', {'upload_licence': updated_licence})
+    if request.method == 'POST':
+        updated_licence = update_created_by_and_last_updated_by(updated_licence, created_by, request.user.email)
+        if updated_licence.is_valid():
+            updated_licence.save()
+            return redirect('home')
+        else:
+            return display_error(request)
+    else:
+        return render(request, 'licence/upload_licence.html', {'upload_licence': updated_licence})
 
 @login_required
 def delete_licence(licence_id):
@@ -61,3 +59,15 @@ def delete_licence(licence_id):
         return redirect('home')
     licence.delete()
     return redirect(home)
+
+def display_error(request):
+    messages.error(request, "Something went wrong, please try again.")
+    # Refresh current page
+    return redirect(request.path_info)
+
+def update_created_by_and_last_updated_by(licence, createdBy, lastUpdatedBy):
+    licence.data._mutable = True
+    licence.data['created_by'] = createdBy
+    licence.data['last_updated_by'] = lastUpdatedBy
+    licence.data._mutable = False
+    return licence

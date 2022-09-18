@@ -15,8 +15,11 @@
                 {{ field }}
             {% endfor %}
         </table>
-        {{ upload_licence.errors }}
-        {{ upload_licence.non_field_errors }}
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
         <button type="submit" class="btn btn-lg btn-success md-5">Create licence</button>
     </form>
 </center>
