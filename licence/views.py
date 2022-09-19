@@ -3,6 +3,7 @@ from .models import Licence, LicenceType
 from .forms import CreateLicence
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 @login_required
@@ -50,7 +51,7 @@ def update_licence(request, licence_id):
     else:
         return render(request, 'licence/upload_licence.html', {'upload_licence': updated_licence})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def delete_licence(request, licence_id):
     licence_id = int(licence_id)
     try:
