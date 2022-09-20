@@ -66,9 +66,9 @@ def display_error(request):
     # Refresh current page
     return redirect(request.path_info)
 
-def update_created_by_and_last_updated_by(licence, createdBy, lastUpdatedBy):
+def update_created_by_and_last_updated_by(licence, created_by, last_updated_by):
     licence.data._mutable = True
-    licence.data['created_by'] = createdBy
-    licence.data['last_updated_by'] = lastUpdatedBy
+    licence.data['created_by'] = created_by
+    licence.data['last_updated_by'] = last_updated_by
     licence.data._mutable = False
     return licence
