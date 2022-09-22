@@ -18,7 +18,12 @@
 
 **To upload/update a licence:**
 1. Once logged in, if you have an admin account, you can use the admin portal or you can click on the top right where it says 'View Site'.
-2. From there you can view all licences on the home screen and click edit, or if you want to create a new licence, click Upload Licence on the navigation bar
+2. Normal users have access in the admin portal to view certain data but to edit and upload, please navigate to 'View Site'.
+3. From there you can view all licences on the home screen and click edit, or if you want to create a new licence, click Upload Licence on the navigation bar
+
+**To run automated test cases**
+1. Configure into your virtual python environment like in the steps above
+2. Run the following command - python manage.py test
 
 ## If you want to access the hosted site at https://licence-tracker.herokuapp.com/ please see log in details in the written assignment.
 
