@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 @login_required
 def home(request):
-    licences = Licence.objects.all()
+    licences = Licence.objects.all().order_by('id')
     # If user is superuser, show the delete button
     is_superuser = request.user.is_superuser
     for item in licences:
