@@ -17,7 +17,7 @@
         </table>
         {% for message in messages %}
         <div class="alert alert-danger" role="alert">
-            {{ message }}
+            {{ message | safe }}
         </div>
         {% endfor %}
         <button type="submit" class="btn btn-lg btn-success md-5">Create licence</button>

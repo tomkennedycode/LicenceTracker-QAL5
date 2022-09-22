@@ -27,7 +27,7 @@ def upload(request):
             upload.save()
             return redirect('home')
         else:
-            return display_error(request)
+            return display_error(request, upload.errors)
     else:
         return render(request, 'licence/upload_licence.html', {'upload_licence': upload})
 
@@ -47,7 +47,7 @@ def update_licence(request, licence_id):
             updated_licence.save()
             return redirect('home')
         else:
-            return display_error(request)
+            return display_error(request, updated_licence.errors)
     else:
         return render(request, 'licence/upload_licence.html', {'upload_licence': updated_licence})
 
@@ -61,8 +61,8 @@ def delete_licence(request, licence_id):
     licence.delete()
     return redirect(home)
 
-def display_error(request):
-    messages.error(request, "Something went wrong, please try again.")
+def display_error(request, error):
+    messages.error(request, f'Something went wrong, please read the following message and try again. {error}')
     # Refresh current page
     return redirect(request.path_info)
 
